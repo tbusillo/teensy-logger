@@ -1,7 +1,7 @@
 {
   "name": "@teensy/logger",
   "author": "Tom Busillo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "packageManager": "pnpm@7.19.0",
   "description": "A teensy-tiny Node.js TypeScript package template.",
   "type": "module",
