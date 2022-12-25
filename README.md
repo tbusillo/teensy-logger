@@ -1,13 +1,13 @@
 <br/>
 <h1 align="center">
-  WIP - Teensy Tiny TypeScript Package
+  Teensy Tiny TypeScript Logger
 </h1>
 <p align="middle">
-  A lightweight template to make your next project just a litle easier.
+  A lightweight Node logger package written in TypeScript.
   </p>
 <br/>
 <p align="center">
-  <a href="https://github.com/tbusillo/teensy-typescript-package/actions/workflows"><img src="https://github.com/tbusillo/teensy-typescript-package/actions/workflows/test.yml/badge.svg" alt="CI status"></a>
+  <a href="https://github.com/tbusillo/teensy-logger/actions/workflows"><img src="https://github.com/tbusillo/teensy-logger/actions/workflows/test.yml/badge.svg" alt="CI status"></a>
 </p>
 <br/>
 
@@ -22,12 +22,12 @@
 
 ## Installation
 
-Using the Github UI, [create a new repository](https://github.com/tbusillo/teensy-typescript-package/generate) based on this template.
+Using the Github UI, [create a new repository](https://github.com/tbusillo/teensy-logger/generate) based on this template.
 
 You can also clone it using the below:
 
 ```bash
-git clone git@github.com:tbusillo/teensy-typescript-package.git
+git clone git@github.com:tbusillo/teensy-logger.git
 
 # install the dependencies
 pnpm install && pnpm build && pnpm dev
@@ -37,7 +37,7 @@ pnpm install && pnpm build && pnpm dev
 
 ```bash
 # clone the template via Github.com or...
-git clone git@github.com:tbusillo/teensy-typescript-package.git
+git clone git@github.com:tbusillo/teensy-logger.git
 
 # OR, go to
 
