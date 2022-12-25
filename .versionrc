@@ -1,0 +1,6 @@
+{
+  "commitAll": true,
+  "bumpFiles": [
+    "package.json"
+  ]
+}

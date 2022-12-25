@@ -1,0 +1,93 @@
+{
+  "name": "@tbusillo/teensy-typescript-package",
+  "author": "Tom Busillo",
+  "version": "0.0.2",
+  "packageManager": "pnpm@7.13.2",
+  "description": "A teensy-tiny Node.js TypeScript package template.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tbusillo/teensy-typescript-package.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tbusillo/teensy-typescript-package/issues"
+  },
+  "keywords": [
+    "typescript",
+    "node",
+    "package",
+    "template",
+    "nodejs"
+  ],
+  "sideEffects": false,
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "unbuild",
+    "start": "nodemon --exec ts-node src/index.ts",
+    "prebuild": "test \"$CI\" = true && npx pnpm install -r --store=node_modules/.pnpm-store || echo skiping pnpm install",
+    "build": "pnpm clean && tsc -p .",
+    "stub": "pnpm unbuild --stub",
+    "test": "jest",
+    "lint": "eslint --ext .ts --fix",
+    "preci:test": "pnpm install -r --store=node_modules/.pnpm-store",
+    "ci:test": "pnpm build && pnpm test",
+    "clean": "rm -rf dist",
+    "release": "standard-version",
+    "format": "prettier --write '**/*.{ts,js,json,md}'",
+    "lint-staged": "pnpm lint && pnpm format",
+    "prepare": "pnpm husky install"
+  },
+  "nodemonConfig": {
+    "include": [
+      "src",
+      "test"
+    ],
+    "ignore": [
+      "dist",
+      "node_modules"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": [
+        "lint-staged",
+        "pnpm test",
+        "git add"
+      ]
+    }
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.0.2",
+    "@types/jest": "^29.0.0",
+    "@types/node": "^18.7.15",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "dotenv": "^16.0.2",
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.1",
+    "jest": "28",
+    "lint-staged": "^13.0.3",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "standard-version": "^9.5.0",
+    "ts-jest": "^28.0.8",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2",
+    "unbuild": "^0.9.4"
+  }
+}
