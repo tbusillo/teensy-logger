@@ -1,8 +1,8 @@
 {
-  "name": "@tbusillo/teensy-logger",
+  "name": "@teensy/logger",
   "author": "Tom Busillo",
-  "version": "0.0.2",
-  "packageManager": "pnpm@7.13.2",
+  "version": "0.0.1",
+  "packageManager": "pnpm@7.19.0",
   "description": "A teensy-tiny Node.js TypeScript package template.",
   "type": "module",
   "license": "MIT",
@@ -48,7 +48,8 @@
     "release": "standard-version",
     "format": "prettier --write '**/*.{ts,js,json,md}'",
     "lint-staged": "pnpm lint && pnpm format",
-    "prepare": "pnpm husky install"
+    "prepare": "pnpm husky install",
+    "publish": "pnpm build && pnpm publish"
   },
   "nodemonConfig": {
     "include": [
