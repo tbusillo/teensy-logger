@@ -49,7 +49,7 @@
     "format": "prettier --write '**/*.{ts,js,json,md}'",
     "lint-staged": "pnpm lint && pnpm format",
     "prepare": "pnpm husky install",
-    "publish": "pnpm build && pnpm publish"
+    "publish": "pnpm build && pnpm publish --access public"
   },
   "nodemonConfig": {
     "include": [
