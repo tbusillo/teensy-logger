@@ -1,9 +1,15 @@
-export type LogLevel = 'trace' | 'info' | 'debug' | 'warn' | 'error'
+export type LogLevels = 'trace' | 'info' | 'debug' | 'warn' | 'error' | 'log'
 
-export const levelPrecedence: Record<number, LogLevel> = {
-  0: 'error',
-  1: 'warn',
-  2: 'info',
-  3: 'debug',
-  4: 'trace'
+export const levels: { [key: string]: number } = {
+  error: 0,
+  warn: 1,
+  info: 2,
+  debug: 3,
+  trace: 4
+}
+
+export interface LoggerOptions {
+  timestamps?: boolean
+  colorize?: boolean
+  includeLabel?: boolean
 }

@@ -1,4 +1,6 @@
-export const escapeCode = '\u001b['
+export const escapeCode = (styles?: number) => {
+  return `\u001b[${styles ? styles : ''}m`
+}
 
 export const styles = {
   format: {
@@ -26,5 +28,28 @@ export const styles = {
     magentaBright: 95,
     cyanBright: 96,
     whiteBright: 97
+  }
+}
+
+export const logStyles: { [key: string]: { color: number; format: number } } = {
+  info: {
+    color: styles.color.green,
+    format: styles.format.bold
+  },
+  debug: {
+    color: styles.color.blue,
+    format: styles.format.bold
+  },
+  warn: {
+    color: styles.color.yellow,
+    format: styles.format.bold
+  },
+  error: {
+    color: styles.color.red,
+    format: styles.format.bold
+  },
+  trace: {
+    color: styles.color.magenta,
+    format: styles.format.bold
   }
 }
