@@ -1,5 +1,5 @@
 export const escapeCode = (styles?: number) => {
-  return `\u001b[${styles ? styles : ''}m`
+  return `\u001b[${styles ? styles + 'm' : 'm'}`
 }
 
 export const styles = {

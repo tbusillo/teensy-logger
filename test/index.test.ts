@@ -1,5 +1,5 @@
 import { describe, it, expect } from '@jest/globals'
-import Logger from '../src/index'
+import Logger from '../src/logger'
 
 // const logger = new Logger({ timestamps: false })
 
@@ -105,7 +105,9 @@ describe('logger', () => {
       const spy = jest.spyOn(console, 'info')
 
       logger.info('logged event example')
-      expect(spy).toBeCalledWith('[INFO]:', 'logged event example', date)
+      expect(spy).toBeCalledWith('[INFO]:', 'logged event example', {
+        timestamp: date
+      })
     })
   })
 })
