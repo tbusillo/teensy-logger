@@ -5,6 +5,7 @@
     "strict": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
+    "noImplicitAny": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noUnusedLocals": true,

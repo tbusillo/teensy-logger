@@ -3,3 +3,4 @@ dist
 .env
 test
 jest.config.ts
+build.config.ts

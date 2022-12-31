@@ -8,6 +8,10 @@ const defaultOptions = {
   id: false
 }
 
+const uuidPattern = new RegExp(
+  /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
+)
+
 describe('logger', () => {
   beforeEach(() => {
     jest.resetAllMocks()
@@ -115,9 +119,6 @@ describe('logger', () => {
     it('id: true', () => {
       const logger = new Logger({ ...defaultOptions, id: true })
       const spy = jest.spyOn(console, 'info')
-      const uuidPattern = new RegExp(
-        /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
-      )
 
       logger.info('logged event example')
 
@@ -127,5 +128,18 @@ describe('logger', () => {
         expect.objectContaining({ id: expect.stringMatching(uuidPattern) })
       )
     })
+  })
+
+  it('when there are no options passed', () => {
+    const logger = new Logger({ colorize: false })
+    const spy = jest.spyOn(console, 'info')
+
+    logger.info('logged event example')
+
+    expect(spy).toBeCalledWith(
+      '[INFO]:',
+      'logged event example',
+      expect.objectContaining({ id: expect.stringMatching(uuidPattern) })
+    )
   })
 })

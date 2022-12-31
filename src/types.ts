@@ -1,6 +1,6 @@
 export type LogLevels = 'trace' | 'info' | 'debug' | 'warn' | 'error' | 'log'
 
-export const levels: { [key: string]: number } = {
+export const Levels: { [key: string]: number } = {
   error: 0,
   warn: 1,
   info: 2,
