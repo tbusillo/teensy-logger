@@ -11,5 +11,6 @@ export const levels: { [key: string]: number } = {
 export interface LoggerOptions {
   timestamps?: boolean
   colorize?: boolean
-  includeLabel?: boolean
+  label?: boolean
+  id?: boolean
 }

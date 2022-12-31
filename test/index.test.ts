@@ -1,12 +1,11 @@
 import { describe, it, expect } from '@jest/globals'
 import Logger from '../src/logger'
 
-// const logger = new Logger({ timestamps: false })
-
 const defaultOptions = {
   timestamps: false,
   colorize: false,
-  includeLabel: true
+  label: true,
+  id: false
 }
 
 describe('logger', () => {
@@ -85,11 +84,13 @@ describe('logger', () => {
         arr: [1, 2, 3, 4, 'foo', 'bar', false]
       })
     })
+
     it('an Error', () => {
       const logger = new Logger(defaultOptions)
       const spy = jest.spyOn(console, 'error')
 
       logger.error(new Error('logged event example'))
+
       expect(spy).toBeCalledWith('[ERROR]:', new Error('logged event example'))
     })
   })
@@ -105,9 +106,26 @@ describe('logger', () => {
       const spy = jest.spyOn(console, 'info')
 
       logger.info('logged event example')
+
       expect(spy).toBeCalledWith('[INFO]:', 'logged event example', {
         timestamp: date
       })
+    })
+
+    it('id: true', () => {
+      const logger = new Logger({ ...defaultOptions, id: true })
+      const spy = jest.spyOn(console, 'info')
+      const uuidPattern = new RegExp(
+        /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
+      )
+
+      logger.info('logged event example')
+
+      expect(spy).toBeCalledWith(
+        '[INFO]:',
+        'logged event example',
+        expect.objectContaining({ id: expect.stringMatching(uuidPattern) })
+      )
     })
   })
 })

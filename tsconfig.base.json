@@ -10,7 +10,7 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "moduleResolution": "Node16",
+    "moduleResolution": "node",
     "outDir": "dist",
     "declaration": true,
     "declarationDir": "dist",
