@@ -2,7 +2,7 @@ export const escapeCode = (styles?: number) => {
   return `\u001b[${styles ? styles + 'm' : 'm'}`
 }
 
-export const styles = {
+export const styles: { [key: string]: { [key: string]: number } } = {
   format: {
     reset: 0,
     bold: 1,

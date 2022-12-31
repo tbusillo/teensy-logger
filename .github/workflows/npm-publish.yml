@@ -1,6 +1,8 @@
 name: Publish release to NPM
 
 on:
+  workflow_dispatch:
+    workflows: ['Run Release']
   release:
     types: [created]
 
