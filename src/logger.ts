@@ -86,13 +86,3 @@ export default class Logger implements IndexSignature {
     return `[${str}]`
   }
 }
-
-const logger = new Logger({ colorize: true, timestamps: true, id: true })
-logger.debug({ message: 'logged event example' })
-
-const childLogger = logger.createChild('child')
-childLogger.debug({ message: 'logged event example' })
-childLogger.info({ message: 'logged event example' })
-logger.warn({ message: 'does this still work?' })
-logger.error({ message: 'here is an error' })
-childLogger.trace({ message: 'here is a trace' })
