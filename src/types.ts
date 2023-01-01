@@ -1,5 +1,9 @@
 export type LogLevels = 'trace' | 'info' | 'debug' | 'warn' | 'error' | 'log'
 
+export interface IndexSignature {
+  [index: string | symbol]: any
+}
+
 export const Levels: { [key: string]: number } = {
   error: 0,
   warn: 1,
@@ -9,8 +13,18 @@ export const Levels: { [key: string]: number } = {
 }
 
 export interface LoggerOptions {
-  timestamps?: boolean
+  timestamp?: boolean
   colorize?: boolean
-  label?: boolean
+  prefix?: boolean
   id?: boolean
+  alias?: string
+  [index: string]: any
+}
+
+export interface DefaultOptions {
+  timestamp: boolean
+  colorize: boolean
+  prefix: boolean
+  id: boolean
+  alias: string
 }

@@ -2,10 +2,11 @@ import { describe, it, expect } from '@jest/globals'
 import Logger from '../src/logger'
 
 const defaultOptions = {
-  timestamps: false,
+  timestamp: false,
   colorize: false,
   label: true,
-  id: false
+  id: false,
+  alias: 'test'
 }
 
 const uuidPattern = new RegExp(
@@ -23,7 +24,11 @@ describe('logger', () => {
 
     logger.info('testing 1 2 3')
 
-    expect(spy).toHaveBeenCalledWith('[INFO]:', 'testing 1 2 3')
+    expect(spy).toHaveBeenCalledWith(
+      '[INFO]:',
+      { alias: 'test' },
+      'testing 1 2 3'
+    )
   })
 
   it('handles debug()', () => {
@@ -32,7 +37,11 @@ describe('logger', () => {
 
     logger.debug('testing 1 2 3')
 
-    expect(spy).toHaveBeenCalledWith('[DEBUG]:', 'testing 1 2 3')
+    expect(spy).toHaveBeenCalledWith(
+      '[DEBUG]:',
+      { alias: 'test' },
+      'testing 1 2 3'
+    )
   })
 
   it('handles warn()', () => {
@@ -41,7 +50,11 @@ describe('logger', () => {
 
     logger.warn('warning 1 2 3')
 
-    expect(spy).toHaveBeenCalledWith('[WARN]:', 'warning 1 2 3')
+    expect(spy).toHaveBeenCalledWith(
+      '[WARN]:',
+      { alias: 'test' },
+      'warning 1 2 3'
+    )
   })
 
   it('handles error()', () => {
@@ -50,7 +63,11 @@ describe('logger', () => {
 
     logger.error('error 1 2 3')
 
-    expect(spy).toHaveBeenCalledWith('[ERROR]:', 'error 1 2 3')
+    expect(spy).toHaveBeenCalledWith(
+      '[ERROR]:',
+      { alias: 'test' },
+      'error 1 2 3'
+    )
   })
 
   it('handles trace()', () => {
@@ -59,7 +76,11 @@ describe('logger', () => {
 
     logger.trace('pity party 1 2 3')
 
-    expect(spy).toHaveBeenCalledWith('[TRACE]:', 'pity party 1 2 3')
+    expect(spy).toHaveBeenCalledWith(
+      '[TRACE]:',
+      { alias: 'test' },
+      'pity party 1 2 3'
+    )
   })
 
   describe('handles being called with', () => {
@@ -69,9 +90,13 @@ describe('logger', () => {
 
       logger.info({ message: 'logged event example' })
 
-      expect(spy).toHaveBeenCalledWith('[INFO]:', {
-        message: 'logged event example'
-      })
+      expect(spy).toHaveBeenCalledWith(
+        '[INFO]:',
+        { alias: 'test' },
+        {
+          message: 'logged event example'
+        }
+      )
     })
 
     it('an array of various prototypes', () => {
@@ -83,10 +108,14 @@ describe('logger', () => {
         arr: [1, 2, 3, 4, 'foo', 'bar', false]
       })
 
-      expect(spy).toHaveBeenCalledWith('[INFO]:', {
-        message: 'logged event example',
-        arr: [1, 2, 3, 4, 'foo', 'bar', false]
-      })
+      expect(spy).toHaveBeenCalledWith(
+        '[INFO]:',
+        { alias: 'test' },
+        {
+          message: 'logged event example',
+          arr: [1, 2, 3, 4, 'foo', 'bar', false]
+        }
+      )
     })
 
     it('an Error', () => {
@@ -95,7 +124,11 @@ describe('logger', () => {
 
       logger.error(new Error('logged event example'))
 
-      expect(spy).toBeCalledWith('[ERROR]:', new Error('logged event example'))
+      expect(spy).toBeCalledWith(
+        '[ERROR]:',
+        { alias: 'test' },
+        new Error('logged event example')
+      )
     })
   })
 
@@ -105,15 +138,20 @@ describe('logger', () => {
     })
 
     it('timestamps: true', () => {
-      const logger = new Logger({ ...defaultOptions, timestamps: true })
+      const logger = new Logger({ ...defaultOptions, timestamp: true })
       const date = new Date().toJSON()
       const spy = jest.spyOn(console, 'info')
 
       logger.info('logged event example')
 
-      expect(spy).toBeCalledWith('[INFO]:', 'logged event example', {
-        timestamp: date
-      })
+      expect(spy).toBeCalledWith(
+        '[INFO]:',
+        { alias: defaultOptions.alias },
+        'logged event example',
+        {
+          timestamp: date
+        }
+      )
     })
 
     it('id: true', () => {
@@ -124,22 +162,47 @@ describe('logger', () => {
 
       expect(spy).toBeCalledWith(
         '[INFO]:',
+        { alias: 'test' },
         'logged event example',
         expect.objectContaining({ id: expect.stringMatching(uuidPattern) })
       )
     })
   })
 
-  it('when there are no options passed', () => {
-    const logger = new Logger({ colorize: false })
-    const spy = jest.spyOn(console, 'info')
+  describe('createChild', () => {
+    it('creates a child logger', () => {
+      const logger = new Logger(defaultOptions)
+      const spy = jest.spyOn(console, 'info')
+      const childLogger = logger.createChild('child', {
+        timestamp: false,
+        colorize: false,
+        id: false
+      })
 
-    logger.info('logged event example')
+      childLogger.info('child logger')
 
-    expect(spy).toBeCalledWith(
-      '[INFO]:',
-      'logged event example',
-      expect.objectContaining({ id: expect.stringMatching(uuidPattern) })
-    )
+      expect(childLogger).toBeInstanceOf(Logger)
+      expect(spy).toBeCalledWith('[INFO]:', { alias: 'child' }, 'child logger')
+    })
+
+    it('creates a child logger with custom options', () => {
+      const logger = new Logger(defaultOptions)
+      const spy = jest.spyOn(console, 'info')
+      const childLogger = logger.createChild('child', {
+        timestamp: true,
+        colorize: false,
+        id: false
+      })
+
+      childLogger.info('child logger')
+
+      expect(childLogger).toBeInstanceOf(Logger)
+      expect(spy).toBeCalledWith(
+        '[INFO]:',
+        { alias: 'child' },
+        'child logger',
+        { timestamp: expect.any(String) }
+      )
+    })
   })
 })
